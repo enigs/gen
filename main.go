@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"os"
 	"strings"
@@ -25,17 +24,19 @@ func main() {
 	// Check if command is supported
 	switch command {
 	case "token":
-		// Define and parse the -b flag
-		tokenCmd := flag.NewFlagSet("token", flag.ExitOnError)
-		bPtr := tokenCmd.Int("b", 0, "Number of bytes to generate")
-		err := tokenCmd.Parse(os.Args[2:])
-		if err != nil {
-			fmt.Printf("\n%s Unable to generate random bytes - %s.\n\n", red("Error:"), err)
-			return
-		}
+		//// Define and parse the -b flag
+		//tokenCmd := flag.NewFlagSet("token", flag.ExitOnError)
+		//bPtr := tokenCmd.Int("b", 0, "Number of bytes to generate")
+		//err := tokenCmd.Parse(os.Args[2:])
+		//if err != nil {
+		//	fmt.Printf("\n%s Unable to generate random bytes - %s.\n\n", red("Error:"), err)
+		//	return
+		//}
 
 		// Generate token
-		GenerateToken(*bPtr)
+		//GenerateToken(*bPtr)
+
+		GenerateToken()
 	default:
 		// Print error message
 		fmt.Printf("\n%s gen CLI tool currently only supports the '%s' command for token generation. \n\n", red("Error:"), red("token"))
