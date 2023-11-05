@@ -50,5 +50,5 @@ func GenerateToken() {
 	tokenizedMasterKey := base64.URLEncoding.WithPadding(base64.NoPadding).EncodeToString(generatedMasterKey)
 
 	// Output the results with yellow color for "key:" and "hex:"
-	fmt.Printf("%s %s\n", yellow("Token Key:"), tokenizedMasterKey)
+	fmt.Printf("%s %s\n\n", yellow("Token Key:"), tokenizedMasterKey)
 }
