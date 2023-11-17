@@ -7,7 +7,6 @@ import (
 	"github.com/fatih/color"
 	"golang.org/x/crypto/nacl/secretbox"
 	"io"
-	"os"
 )
 
 func GenerateToken() {
@@ -31,7 +30,7 @@ func GenerateToken() {
 	var masterKey [32]byte
 	if _, err := io.ReadFull(rand.Reader, masterKey[:]); err != nil {
 		fmt.Printf("\n%s Unable to generate random bytes - %s.\n\n", red("Error:"), err)
-		os.Exit(1)
+		return
 	}
 
 	// Copy masterKey to a byte slice

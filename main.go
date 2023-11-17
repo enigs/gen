@@ -1,20 +1,33 @@
 package main
 
 import (
+	"embed"
+	_ "embed"
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/fatih/color"
 )
 
-func main() {
-	// Set color red
-	red := color.New(color.FgHiRed).SprintFunc()
+// Define global color functions
+var (
+	red    = color.New(color.FgHiRed).SprintFunc()
+	yellow = color.New(color.FgHiYellow).SprintFunc()
+	blue   = color.New(color.FgHiBlue).SprintFunc()
+	cyan   = color.New(color.FgHiCyan).SprintFunc()
+)
 
+//go:embed framework.20231117.zip
+var content embed.FS
+var fileName = "framework.20231117.zip"
+
+func main() {
 	// Check number of arguments
 	if len(os.Args) < 2 {
-		fmt.Printf("\n%s gen CLI tool currently only supports the '%s' command for token generation. \n\n", red("Error:"), red("token"))
+		format := "\n%s gen CLI tool currently only supports '%s' command for token generation or '%s' for framework generation. \n\n"
+		fmt.Printf(format, red("Error:"), red("token"), red("framework $PATH"))
 		os.Exit(1)
 	}
 
@@ -24,19 +37,24 @@ func main() {
 	// Check if command is supported
 	switch command {
 	case "token":
-		//// Define and parse the -b flag
-		//tokenCmd := flag.NewFlagSet("token", flag.ExitOnError)
-		//bPtr := tokenCmd.Int("b", 0, "Number of bytes to generate")
-		//err := tokenCmd.Parse(os.Args[2:])
-		//if err != nil {
-		//	fmt.Printf("\n%s Unable to generate random bytes - %s.\n\n", red("Error:"), err)
-		//	return
-		//}
-
-		// Generate token
-		//GenerateToken(*bPtr)
-
 		GenerateToken()
+
+	case "framework":
+		if len(os.Args) < 3 {
+			fmt.Printf("Please provide a valid path to generate the framework.\n")
+			os.Exit(1)
+		}
+
+		path := os.Args[2]
+		absPath, err := filepath.Abs(path)
+		if err != nil {
+			fmt.Printf("\n%s Error processing path: %s\n\n", red("Error:"), red(err.Error()))
+			os.Exit(1)
+		}
+
+		absPath = filepath.Join(absPath, "")
+
+		GenerateFramework(absPath)
 	default:
 		// Print error message
 		fmt.Printf("\n%s gen CLI tool currently only supports the '%s' command for token generation. \n\n", red("Error:"), red("token"))
